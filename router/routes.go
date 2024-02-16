@@ -1,46 +1,22 @@
 package router
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/leocklaus/books-api/handler"
 )
 
 func InitializeRoutes(r *gin.Engine) {
 
 	v1 := r.Group("/api/v1")
 
-	v1.GET("/books", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Colecao de livros",
-		})
-	})
+	v1.GET("/books", handler.GetBookCollectionHandler)
 
-	v1.GET("/books/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Livro com a id: " + id,
-		})
-	})
+	v1.GET("/books/:id", handler.GetBookByIdHandler)
 
-	v1.POST("/books", func(c *gin.Context) {
-		c.JSON(http.StatusCreated, gin.H{
-			"message": "poing",
-		})
-	})
+	v1.POST("/books", handler.AddNewBookHandler)
 
-	v1.PUT("/books/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Livro com o id: " + id,
-		})
-	})
+	v1.PUT("/books/:id", handler.EditBookHandler)
 
-	v1.DELETE("/books/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Deletando livro com id: " + id,
-		})
-	})
+	v1.DELETE("/books/:id", handler.DeleteBookHandler)
 
 }
